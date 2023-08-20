@@ -72,9 +72,8 @@ class PolymurHashTests: XCTestCase {
   func testHashable() {
     struct H: Hashable {
       let s: String
-      // deprecation warning here
-      var hashValue: Int {
-        Scope.hasher.hashInt(s: s)
+      var hashValue: Int { // deprecation warning here
+        HashScope.hasher.hashInt(s: s)
       }
     }
     struct J: Hashable {
@@ -91,12 +90,19 @@ class PolymurHashTests: XCTestCase {
     let hd = [h: "ok"]
     XCTAssertEqual("ok", hd[h])
   }
-  enum Scope {
+  enum HashScope {
     static let hasher = PolymurHasher(seed: .max)
-
   }
-  // https://github.com/apple/swift/pull/41534/
-  // https://forums.swift.org/t/pitch-pointer-bit-width-compile-time-conditional
-  // https://forums.swift.org/t/compilation-conditions-for-word-size/26995
-  //public static func asIntBits(_ i: UInt64) -> Int? {
+
+  /// Verify Int maintains distinct values for UInt64
+  func testInt() {
+    guard PolymurHasher.canReturnInt() else {
+      return
+    }
+    for j in 0..<4 {
+      let value = UInt64.max - UInt64(j)
+      let i = Int(truncatingIfNeeded: value)
+      XCTAssertEqual(-(j+1), i, "value: \(value)")
+    }
+  }
 }
