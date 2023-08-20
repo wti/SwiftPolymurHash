@@ -20,13 +20,14 @@
 - polymur-hash.h is manually copied from its source repository
     - also demo.c is from main.c, with main function renamed
     - Update PolymurHash.VERSION in swift when updating sources
-- Untested except on macOS
-    - TODO: verify swift compiler reduces to same/similar assembly as clang
-    - No need to link with m (math) library on Linux, et al?
-      - `linkerSettings: [.linkedLibrary("m", .when(platforms: [.linux]))]`
-- 2 known warnings
+- Compiling: 2 known warnings
     - test code deprecation for `Hashable.hashValue`
     - c code `Implicit conversion loses integer precision`
+- Linking
+    - No need to link with m (math) library on Linux, et al?
+      - `linkerSettings: [.linkedLibrary("m", .when(platforms: [.linux]))]`
+- Testing
+    - TODO: verify swift compiler reduces to same/similar assembly as clang
 
 ## Legal
 - Copyright authors, All Rights Reserved
