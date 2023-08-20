@@ -1,0 +1,4 @@
+module _CPolymurHash {
+  header "polymur-hash.h"
+  header "demo.h"
+}
