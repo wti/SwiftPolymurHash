@@ -3,7 +3,13 @@
     - [polymur-hash discussion on HN](https://news.ycombinator.com/item?id=37176289)
  
 ## Usage
-- See e.g., [PolymurHashTests](Tests/PolymurHashTests/PolymurHashTests.swift#L11)
+- Declare dependency in Package.swift, `Package(...,`:
+    - `dependencies: `
+        - `.package(url: "https://github.com/wti/SwiftPolymurHash.git", from: "0.0.1")`
+    - `targets: [ .target(..., dependencies: `
+        - `[.product(name: "PolymurHash", package: "SwiftPolymurHash")]`
+- Code
+    - See e.g., [PolymurHashTests](Tests/PolymurHashTests/PolymurHashTests.swift#L11)
 - The tweak value provides some pseudo-variance to avoid hash attacks
     - But you can set it to zero or the same value to reproduce hashes
 - It uses 5 UInt64's of state per hasher (including the default tweak value)
@@ -13,7 +19,7 @@
     - Hashable.hashValue is deprecated
     - Hasher has no API for extrinsic values
 - There are no guarantees that polymur hashes will combine well with Swift hashes 
-- So perhaps restrict usage to top-level types
+- Consider restricting usage for Hashable to top-level types
 - See  [SE-206](https://github.com/apple/swift-evolution/blob/main/proposals/0206-hashable-enhancements.md)
 
 ## Development
