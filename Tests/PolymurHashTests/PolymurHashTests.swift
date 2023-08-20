@@ -81,9 +81,15 @@ class PolymurHashTests: XCTestCase {
       let h: H
       let i: Int
     }
-    let j = J(h: H(s: "here"), i: 42)
+    // Demo use of wrapped and unwrapped types in Set and Dictionary
+    let h = H(s: "here")
+    let j = J(h: h, i: 42)
     let set = Set([j])
     XCTAssertEqual("here", set.first?.h.s ?? "not here")
+    let jd = [j: "ok"]
+    XCTAssertEqual("ok", jd[j])
+    let hd = [h: "ok"]
+    XCTAssertEqual("ok", hd[h])
   }
   enum Scope {
     static let hasher = PolymurHasher(seed: .max)
